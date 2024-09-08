@@ -72,10 +72,13 @@ public_users.get('/title/:title', function (req, res) {
 public_users.get('/review/:isbn', function (req, res) {
   let to_send = new Promise((resolve, reject) => {
     let filtered_books = Object.values(books).filter((book) => (parseInt(book.isbn) == parseInt(req.params.isbn)));
-    resolve(filtered_books);
+    resolve(filtered_books[0]);
     reject('error');
   });
-  to_send.then((data) => {return res.send(data.reviews);}).catch((err) => console.log(err));
+  to_send.then((data) => {
+    console.log(data);
+    console.log(data.reviews);
+    return res.send(data.reviews);}).catch((err) => console.log(err));
 });
 
 module.exports.general = public_users;

@@ -12,7 +12,6 @@ app.use("/customer",session({secret:"fingerprint_customer",resave: true, saveUni
 
 app.use("/customer/auth/*", function auth(req,res,next){
     // Check if user is logged in and has valid access token
-    try {
         let token = JSON.parse(Object.values(req.sessionStore.sessions)[0]).authorization.accessToken;
 
         // Verify JWT token
@@ -24,10 +23,6 @@ app.use("/customer/auth/*", function auth(req,res,next){
                 return res.status(403).json({ message: "User not authenticated" });
             }
         });
-    } catch(err) {
-        return res.status(403).json(
-          { message: `"${err}"` });
-    }
 });
  
 const PORT =5000;
